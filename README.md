@@ -1,4 +1,4 @@
-# 🔍 Circle-to-Search Desktop AI Tool
+# 🔍 Circle-to-Search(I don't know what else to call it Select Box to Ask?) 
 
 Inspired by Android's "Circle to Search" and macOS Spotlight. Select any portion of your screen, type your question, and get AI answers instantly—all without leaving your current workspace.
 
@@ -29,21 +29,24 @@ pip install PyQt6 pillow google-genai
 
 ### 2. Configure Your API Key
 
-Set up your Gemini API key as a system environment variable. You can do this via command line or the Windows GUI:
+Set up your Gemini API key as an environment variable using one of the following methods:
 
-**Option A: Using Command Prompt / PowerShell (Quickest)**
-Open your terminal and run:
-```bash
-setx GEMINI_API_KEY "your_actual_gemini_api_key"
-```
-*(Note: You may need to restart your terminal or background scripts for this to take effect)*
-
-**Option B: Using Windows GUI**
+**Method 1: Windows GUI**
 1. Press `Win + R`, type `sysdm.cpl`, and press `Enter`.
 2. Go to **Advanced** -> **Environment Variables**.
 3. Under **User variables**, click **New**:
    - **Variable name:** `GEMINI_API_KEY`
    - **Variable value:** `your_actual_gemini_api_key`
+
+**Method 2: Windows Command Prompt (setx)**
+```cmd
+setx GEMINI_API_KEY "your_actual_gemini_api_key"
+```
+
+**Method 3: Bash (Linux/macOS or Git Bash)**
+```bash
+export GEMINI_API_KEY="your_actual_gemini_api_key"
+```
 
 ### 3. Setting Up Your Custom Hotkey
 

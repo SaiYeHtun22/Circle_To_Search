@@ -30,13 +30,11 @@ class UnifiedAIWindow(QtWidgets.QWidget):
         self.init_ui()
         self.center_on_screen()
         
-        # Auto-focus input box as soon as the window appears
         QtCore.QTimer.singleShot(50, self.focus_input)
 
     def focus_input(self):
         self.input_field.setFocus()
 
-    # Close instantly on ESC key
     def keyPressEvent(self, event: QtGui.QKeyEvent):
         if event.key() == QtCore.Qt.Key.Key_Escape:
             QtWidgets.QApplication.quit()
@@ -125,7 +123,6 @@ class UnifiedAIWindow(QtWidgets.QWidget):
         header.addWidget(close_btn)
         layout.addLayout(header)
 
-        # Render Pixmap directly from bytes
         pixmap = QtGui.QPixmap()
         pixmap.loadFromData(self.img_bytes)
         
@@ -212,7 +209,6 @@ class SnippingWidget(QtWidgets.QWidget):
         self.end = QtCore.QPoint()
         self.is_drawing = False
 
-    # Close snipping on ESC key too if canceled
     def keyPressEvent(self, event: QtGui.QKeyEvent):
         if event.key() == QtCore.Qt.Key.Key_Escape:
             QtWidgets.QApplication.quit()

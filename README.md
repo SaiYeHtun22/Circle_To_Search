@@ -12,8 +12,6 @@ Inspired by Android's "Circle to Search" and macOS Spotlight. Select any portion
 ## ✨ Features
 
 - **Instant Screen Capture:** Drag a box over any screen area.
-- **Auto-Focused Input:** Cursor is ready immediately upon releasing mouse.
-- **Press Esc to Exit:** Instantly close the overlay anytime.
 
 ---
 
@@ -31,7 +29,16 @@ pip install PyQt6 pillow google-genai
 
 ### 2. Configure Your API Key
 
-Set up your Gemini API key as a system environment variable:
+Set up your Gemini API key as a system environment variable. You can do this via command line or the Windows GUI:
+
+**Option A: Using Command Prompt / PowerShell (Quickest)**
+Open your terminal and run:
+```bash
+setx GEMINI_API_KEY "your_actual_gemini_api_key"
+```
+*(Note: You may need to restart your terminal or background scripts for this to take effect)*
+
+**Option B: Using Windows GUI**
 1. Press `Win + R`, type `sysdm.cpl`, and press `Enter`.
 2. Go to **Advanced** -> **Environment Variables**.
 3. Under **User variables**, click **New**:

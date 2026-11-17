@@ -125,9 +125,17 @@ class UnifiedAIWindow(QtWidgets.QWidget):
 
         pixmap = QtGui.QPixmap()
         pixmap.loadFromData(self.img_bytes)
-        
+
+        # Fit the whole capture into the preview (up to 518x260) instead of
+        # squeezing it into a fixed 140px-high strip.
+        scaled = pixmap.scaled(
+            518, 260,
+            QtCore.Qt.AspectRatioMode.KeepAspectRatio,
+            QtCore.Qt.TransformationMode.SmoothTransformation,
+        )
+
         self.image_label = QtWidgets.QLabel()
-        self.image_label.setPixmap(pixmap.scaled(518, 140, QtCore.Qt.AspectRatioMode.KeepAspectRatio, QtCore.Qt.TransformationMode.SmoothTransformation))
+        self.image_label.setPixmap(scaled)
         self.image_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.image_label.setStyleSheet("background-color: #161618; border: 1px solid #27272a; border-radius: 8px; padding: 6px;")
         layout.addWidget(self.image_label)
@@ -248,8 +256,25 @@ class SnippingWidget(QtWidgets.QWidget):
             self.hide()
             
             if rect.width() > 10 and rect.height() > 10:
-                bbox = (rect.x(), rect.y(), rect.x() + rect.width(), rect.y() + rect.height())
-                img = ImageGrab.grab(bbox=bbox)
+                # Qt coordinates are logical (scaled) pixels, but ImageGrab
+                # captures in physical pixels. Scale the rectangle by the
+                # screen's device pixel ratio so the grabbed region matches
+                # the selection exactly on high-DPI displays (125%, 150%...).
+                origin = self.geometry().topLeft()
+                global_rect = QtCore.QRect(origin + rect.topLeft(), rect.size())
+
+                screen = QtWidgets.QApplication.screenAt(global_rect.center())
+                dpr = screen.devicePixelRatio() if screen is not None else self.devicePixelRatioF()
+
+                x, y = global_rect.x(), global_rect.y()
+                w, h = global_rect.width(), global_rect.height()
+                bbox = (
+                    round(x * dpr),
+                    round(y * dpr),
+                    round((x + w) * dpr),
+                    round((y + h) * dpr),
+                )
+                img = ImageGrab.grab(bbox=bbox, all_screens=True)
                 
                 img_byte_arr = io.BytesIO()
                 img.save(img_byte_arr, format='PNG')

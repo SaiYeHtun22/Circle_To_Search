@@ -1,4 +1,4 @@
-# 🔍 Circle-to-Search(I don't know what else to call it Select Box to Ask?) 
+# 🔍 Circle-to-Search(?I don't know what else to call it Select Box to Ask?) Desktop AI Tool
 
 Inspired by Android's "Circle to Search" and macOS Spotlight. Select any portion of your screen, type your question, and get AI answers instantly—all without leaving your current workspace.
 

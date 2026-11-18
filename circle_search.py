@@ -126,8 +126,6 @@ class UnifiedAIWindow(QtWidgets.QWidget):
         pixmap = QtGui.QPixmap()
         pixmap.loadFromData(self.img_bytes)
 
-        # Fit the whole capture into the preview (up to 518x260) instead of
-        # squeezing it into a fixed 140px-high strip.
         scaled = pixmap.scaled(
             518, 260,
             QtCore.Qt.AspectRatioMode.KeepAspectRatio,
@@ -256,10 +254,6 @@ class SnippingWidget(QtWidgets.QWidget):
             self.hide()
             
             if rect.width() > 10 and rect.height() > 10:
-                # Qt coordinates are logical (scaled) pixels, but ImageGrab
-                # captures in physical pixels. Scale the rectangle by the
-                # screen's device pixel ratio so the grabbed region matches
-                # the selection exactly on high-DPI displays (125%, 150%...).
                 origin = self.geometry().topLeft()
                 global_rect = QtCore.QRect(origin + rect.topLeft(), rect.size())
 
